@@ -40,7 +40,9 @@ secrets {
 
 dependencies {
     implementation("com.google.android.libraries.navigation:navigation:7.8.0")
-    implementation("com.google.android.libraries.places:places:5.3.0")
+    implementation("com.google.android.libraries.places:places:5.3.0") {
+        exclude(group = "com.google.android.gms", module = "play-services-maps")
+    }
     implementation("com.google.android.gms:play-services-location:21.4.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
