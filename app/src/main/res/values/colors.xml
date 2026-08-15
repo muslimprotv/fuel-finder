@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ff_green">#087A57</color>
+    <color name="ff_green_soft">#DDF2E9</color>
+    <color name="ff_background">#F5F8F7</color>
+    <color name="ff_text">#14251F</color>
+    <color name="ff_muted">#64736D</color>
+    <color name="ff_border">#DCE7E2</color>
+    <color name="white">#FFFFFF</color>
+</resources>
