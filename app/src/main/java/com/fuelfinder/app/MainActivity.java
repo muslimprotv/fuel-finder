@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void searchFuel(Location userLocation) {
         LatLng center = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
         CircularBounds circle = CircularBounds.newInstance(center, 7000.0);
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.DISPLAY_NAME, Place.Field.LAT_LNG);
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.DISPLAY_NAME, Place.Field.LOCATION);
         SearchNearbyRequest request = SearchNearbyRequest.builder(circle, fields)
             .setIncludedTypes(Arrays.asList("gas_station"))
             .setMaxResultCount(20)
@@ -107,15 +107,16 @@ public class MainActivity extends AppCompatActivity {
             .addOnSuccessListener(response -> {
                 List<Station> result = new ArrayList<>();
                 for (Place place : response.getPlaces()) {
-                    if (place.getId() == null || place.getLatLng() == null) continue;
+                    LatLng location = place.getLocation();
+                    if (place.getId() == null || location == null) continue;
                     String name = place.getDisplayName() == null ? "Fuel Station" : place.getDisplayName().toString();
                     float[] distance = new float[1];
                     Location.distanceBetween(
                         userLocation.getLatitude(), userLocation.getLongitude(),
-                        place.getLatLng().latitude, place.getLatLng().longitude,
+                        location.latitude, location.longitude,
                         distance
                     );
-                    result.add(new Station(place.getId(), name, place.getLatLng().latitude, place.getLatLng().longitude, distance[0]));
+                    result.add(new Station(place.getId(), name, location.latitude, location.longitude, distance[0]));
                 }
                 result.sort(Comparator.comparingDouble(s -> s.distanceMeters));
                 adapter.submit(result);
